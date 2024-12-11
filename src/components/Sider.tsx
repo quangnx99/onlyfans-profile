@@ -1,5 +1,5 @@
 import {FiHome, FiSend, FiUser} from 'react-icons/fi';
-import {cn} from '@/utils/cn';
+import {cn} from '@/lib/utils/cn';
 
 function IconButton() {
   return <div></div>;
@@ -15,12 +15,12 @@ export default function Sider() {
     </div>
     <div
       className={cn(
-        'text-[24px] text-neutral-500 w-[40px] h-[40px] flex items-center cursor-pointer hover:text-primary hover:bg-primary/20',
-        'w-full gap-4 text-[20px] font-medium'
+        'text-neutral-500 w-[40px] h-[40px] flex items-center cursor-pointer hover:text-primary hover:bg-primary/20',
+        'w-full gap-4 text-[18px] font-medium'
       )}
     >
       <div className={'w-[32px]'}>
-        <FiHome className={'text-[24px] mx-auto'}/>
+        <FiHome className={'text-[22px] mx-auto'}/>
       </div>
       <div className={'hidden lg:block'}>
         Home
@@ -28,12 +28,12 @@ export default function Sider() {
     </div>
     <div
       className={cn(
-        'text-[24px] text-neutral-500 w-[40px] h-[40px] flex items-center cursor-pointer hover:text-primary hover:bg-primary/20',
-        'w-full gap-4 text-[20px] font-medium'
+        'text-neutral-500 w-[40px] h-[40px] flex items-center cursor-pointer hover:text-primary hover:bg-primary/20',
+        'w-full gap-4 text-[18px] font-medium'
       )}
     >
       <div className={'w-[32px]'}>
-        <FiSend className={'text-[24px] mx-auto'}/>
+        <FiSend className={'text-[22px] mx-auto'}/>
       </div>
       <div className={'hidden lg:block'}>
         Contact me

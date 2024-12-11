@@ -3,7 +3,7 @@
 import {useEffect, useState} from 'react';
 import {AppConfig} from '@/config/app.config';
 import {FiAlertTriangle, FiChevronDown, FiGitBranch, FiStar} from 'react-icons/fi';
-import {cn} from '@/utils/cn';
+import {cn} from '@/lib/utils/cn';
 import Markdown from 'react-markdown';
 
 function ProjectItem({project}: {project: any}) {

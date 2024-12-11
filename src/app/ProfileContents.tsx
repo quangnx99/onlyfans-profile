@@ -1,12 +1,11 @@
-'use client';
-import {useState} from 'react';
-import {cn} from '@/utils/cn';
 import ProfileProjects from '@/app/ProfileProjects';
+import ProfileContentsTabBar from '@/app/ProfileContentsTabBar';
+import ProfilePosts from '@/app/ProfilePosts';
 
-const tabs = [{
+export const tabs = [{
   key: 'posts',
   label: 'Posts',
-  content: <></>
+  content: <ProfilePosts/>
 }, {
   key: 'projects',
   label: 'Projects',
@@ -14,26 +13,11 @@ const tabs = [{
 }];
 
 export default function ProfileContents() {
-  const [activeTab, setActiveTab] = useState<string>('posts');
   return <div className={'bg-white border-t'}>
-    <div className={'flex flex-row text-[14px] font-medium'}>
-      {tabs.map(tab => (
-        <div
-          className={cn(
-            'flex-1 py-4 text-center border-b text-neutral-400 uppercase font-semibold cursor-pointer hover:text-black',
-            tab.key === activeTab && 'border-b-2 border-black text-black'
-          )} key={tab.key}
-          onClick={() => setActiveTab(tab.key)}
-        >
-          {tab.label}
-        </div>
-      ))}
-    </div>
+    <ProfileContentsTabBar/>
     <div className={'bg-neutral-100'}>
       {tabs.map(tab => (
-        <div key={tab.key} className={cn(
-          tab.key === activeTab ? 'block' : 'hidden',
-        )}>
+        <div key={tab.key} className={`hidden profile-tab profile-tab-${tab.key}`}>
           {tab.content}
         </div>
       ))}
