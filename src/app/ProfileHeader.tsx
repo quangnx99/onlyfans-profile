@@ -1,5 +1,6 @@
 import {AppConfig} from '@/config/app.config';
-import {FiShare} from 'react-icons/fi';
+import {FiMenu, FiShare} from 'react-icons/fi';
+import {OpenMenuButton, siderRef} from '@/components/Sider';
 
 export default function ProfileHeader() {
   return <div className={'bg-white border-b'}>
@@ -9,12 +10,19 @@ export default function ProfileHeader() {
         backgroundImage: `url(https://images.pexels.com/photos/1287075/pexels-photo-1287075.jpeg?cs=srgb&dl=pexels-eberhardgross-1287075.jpg&fm=jpg)`,
       }}
     >
+
       <div className="bg-gradient-to-b from-black/60 to-transparent h-[80%] w-full text-white p-4">
-        <div className={'font-semibold'}>
-          Anh Nhan Nguyen
-        </div>
-        <div className={'text-[12px]'}>
-          3 Posts, 25K Views
+
+        <div className={'flex flex-row items-center'}>
+          <OpenMenuButton/>
+          <div className={'md:px-4'}>
+            <div className={'font-semibold'}>
+              Anh Nhan Nguyen
+            </div>
+            <div className={'text-[12px]'}>
+              3 Posts, 25K Views
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -27,7 +35,7 @@ export default function ProfileHeader() {
       />
       <div className={'pt-4'}>
         <div className={'border border-neutral-200 w-12 h-12 rounded-full flex justify-center items-center'}>
-          <FiShare width='24px'/>
+          <FiShare width="24px"/>
         </div>
       </div>
     </div>
@@ -55,5 +63,5 @@ export default function ProfileHeader() {
         </div>
       </div>
     </div>
-  </div>
+  </div>;
 }

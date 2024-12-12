@@ -9,6 +9,7 @@ export default function Contact() {
       <div className={'flex flex-col gap-2'}>
         {AppConfig.subscriptions.map(sub => (
           <a
+            href={'/contact'}
             className={'flex flex-row justify-between bg-primary cursor-pointer text-white px-5 py-2 rounded-full font-semibold text-[14px]'}
             key={sub.name}
           >

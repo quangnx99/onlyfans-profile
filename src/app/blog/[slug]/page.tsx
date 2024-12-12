@@ -1,31 +1,48 @@
 import AppLayout from '@/components/AppLayout';
 import {getPostData} from '@/lib/posts';
-import {FiArrowLeft, FiCopy} from 'react-icons/fi';
+import {FiArrowLeft} from 'react-icons/fi';
 import Script from 'next/script';
 import {AppConfig} from '@/config/app.config';
 import PostPictures from '@/app/blog/[slug]/PostPictures';
 import Markdown from 'react-markdown';
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
-import { darcula } from "react-syntax-highlighter/dist/cjs/styles/prism";
-import tsx from "react-syntax-highlighter/dist/cjs/languages/prism/tsx";
-import typescript from "react-syntax-highlighter/dist/cjs/languages/prism/typescript";
-import scss from "react-syntax-highlighter/dist/cjs/languages/prism/scss";
-import bash from "react-syntax-highlighter/dist/cjs/languages/prism/bash";
-import markdown from "react-syntax-highlighter/dist/cjs/languages/prism/markdown";
-import json from "react-syntax-highlighter/dist/cjs/languages/prism/json";
-import lua from "react-syntax-highlighter/dist/cjs/languages/prism/lua";
+import {PrismLight as SyntaxHighlighter} from 'react-syntax-highlighter';
+import {darcula} from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import tsx from 'react-syntax-highlighter/dist/cjs/languages/prism/tsx';
+import typescript from 'react-syntax-highlighter/dist/cjs/languages/prism/typescript';
+import scss from 'react-syntax-highlighter/dist/cjs/languages/prism/scss';
+import bash from 'react-syntax-highlighter/dist/cjs/languages/prism/bash';
+import markdown from 'react-syntax-highlighter/dist/cjs/languages/prism/markdown';
+import json from 'react-syntax-highlighter/dist/cjs/languages/prism/json';
+import lua from 'react-syntax-highlighter/dist/cjs/languages/prism/lua';
 import CopyCodeButton from '@/app/blog/[slug]/CopyCodeButton';
+import {Metadata} from 'next';
 
-SyntaxHighlighter.registerLanguage("tsx", tsx);
-SyntaxHighlighter.registerLanguage("typescript", typescript);
-SyntaxHighlighter.registerLanguage("scss", scss);
-SyntaxHighlighter.registerLanguage("bash", bash);
-SyntaxHighlighter.registerLanguage("markdown", markdown);
-SyntaxHighlighter.registerLanguage("json", json);
-SyntaxHighlighter.registerLanguage("lua", lua);
+SyntaxHighlighter.registerLanguage('tsx', tsx);
+SyntaxHighlighter.registerLanguage('typescript', typescript);
+SyntaxHighlighter.registerLanguage('scss', scss);
+SyntaxHighlighter.registerLanguage('bash', bash);
+SyntaxHighlighter.registerLanguage('markdown', markdown);
+SyntaxHighlighter.registerLanguage('json', json);
+SyntaxHighlighter.registerLanguage('lua', lua);
 
 interface PostContentProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata(
+  {params}: PostContentProps,
+): Promise<Metadata> {
+  const slug = (await params).slug;
+  const post = await getPostData(slug);
+
+  return {
+    title: post.title,
+    description: post.summary,
+    publisher: AppConfig.name,
+    openGraph: {
+      images: post.images ?? [],
+    },
+  };
 }
 
 export default async function PostContent({params}: PostContentProps) {
@@ -47,8 +64,8 @@ export default async function PostContent({params}: PostContentProps) {
     <Markdown
       className={'text-[14px] bg-white p-4 my-4 border-y leading-relaxed post-content'}
       components={{
-        code({ inline, className, ...props }) {
-          const hasLang = /language-(\w+)/.exec(className || "");
+        code({inline, className, ...props}) {
+          const hasLang = /language-(\w+)/.exec(className || '');
           return !inline && hasLang ? (
             <SyntaxHighlighter
               style={darcula}
@@ -58,7 +75,7 @@ export default async function PostContent({params}: PostContentProps) {
               showLineNumbers={true}
               useInlineStyles={true}
             >
-              {String(props.children).replace(/\n$/, "")}
+              {String(props.children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
             <code className={className} {...props} />
@@ -69,7 +86,7 @@ export default async function PostContent({params}: PostContentProps) {
           return <div className="relative">
             <CopyCodeButton code={code}/>
             <pre {...pre}></pre>
-          </div>
+          </div>;
         }
       }}
     >

@@ -1,38 +1,69 @@
-"use client";
-import {FiHome, FiSend, FiUser} from 'react-icons/fi';
+'use client';
+import {FiHome, FiMenu, FiSend, FiUser} from 'react-icons/fi';
 import {AppConfig} from '@/config/app.config';
 import {IconButton} from '@/components/SiderIconButton';
+import {createRef, useImperativeHandle, useState} from 'react';
+import {cn} from '@/lib/utils/cn';
 
+interface SiderRefType {
+  open: Function,
+}
+
+export const siderRef = createRef<SiderRefType>();
+
+export function OpenMenuButton() {
+  return <a className={'p-4 -ml-4 text-[20px] cursor-pointer md:hidden'} onClick={() => siderRef.current?.open()}>
+    <FiMenu/>
+  </a>;
+}
 
 export default function Sider() {
-  return <div className={'flex-col justify-between md:items-start px-4 hidden md:flex xl:w-[240px] py-6'}>
-    <div className={'flex flex-col gap-6'}>
-      <div className={''}>
-        <div
-          className={'text-[20px] w-[32px] h-[32px] bg-neutral-100 rounded-full flex justify-center items-center text-neutral-400 cursor-pointer transition-all duration-300 hover:text-white hover:bg-primary'}>
-          <FiUser/>
+  const [opened, setOpened] = useState<boolean>(false);
+
+  useImperativeHandle(siderRef, () => ({
+    open: () => setOpened(true),
+  }));
+
+  return <div
+    className={'fixed left-0 top-0 bottom-0 md:relative'}
+  >
+    {opened && <div className={'bg-black/80 fixed left-0 right-0 top-0 bottom-0 z-10 md:hidden'} onClick={() => setOpened(false)}/>}
+    <div
+      style={{zIndex: 999}}
+      className={cn(
+      'flex-col h-full justify-between md:items-start px-4 flex xl:w-[240px] py-6 relative bg-white',
+      'transition-all duration-300',
+      !opened && '-ml-[80px] md:ml-0'
+    )}
+    >
+      <div className={'flex flex-col gap-6'}>
+        <div className={''}>
+          <div
+            className={'text-[20px] w-[32px] h-[32px] bg-neutral-100 rounded-full flex justify-center items-center text-neutral-400 cursor-pointer transition-all duration-300 hover:text-white hover:bg-primary'}>
+            <FiUser/>
+          </div>
         </div>
-      </div>
-      <IconButton
-        icon={FiHome}
-        label={'Home'}
-        url={'/'}
-      />
-      <IconButton
-        icon={FiSend}
-        label={'Contact me'}
-        url={'/contact'}
-      />
-    </div>
-    <div className={'flex flex-col gap-2'}>
-      {AppConfig.socialLinks.map((social, index) => (
         <IconButton
-          key={social.name + index}
-          icon={social.icon}
-          label={social.name}
-          onClick={() => window.open(social.url, '_blank')}
+          icon={FiHome}
+          label={'Home'}
+          url={'/'}
         />
-      ))}
+        <IconButton
+          icon={FiSend}
+          label={'Contact me'}
+          url={'/contact'}
+        />
+      </div>
+      <div className={'flex flex-col gap-2'}>
+        {AppConfig.socialLinks.map((social, index) => (
+          <IconButton
+            key={social.name + index}
+            icon={social.icon}
+            label={social.name}
+            onClick={() => window.open(social.url, '_blank')}
+          />
+        ))}
+      </div>
     </div>
   </div>;
 }
