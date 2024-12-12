@@ -1,8 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
-import {remark} from 'remark';
-import html from 'remark-html';
 
 const postsDirectory = path.join(process.cwd(), 'posts');
 
@@ -18,7 +16,7 @@ export function getSortedPostsData() {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
 
     // Parse the file's front matter
-    const { data } = matter(fileContents);
+    const {data} = matter(fileContents);
 
     return {
       slug,
@@ -38,13 +36,12 @@ export async function getPostData(slug: string) {
   const fullPath = path.join(postsDirectory, `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
 
-  const { data, content } = matter(fileContents);
-  const processedContent = await remark().use(html).process(content);
+  const {data, content} = matter(fileContents);
 
   return {
     slug,
-    contentHtml: processedContent.toString(),
+    content,
     images: data.images || [], // Add this line to include images from the front matter
     ...data,
-  };
+  } as any;
 }

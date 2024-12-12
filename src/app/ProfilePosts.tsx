@@ -4,7 +4,6 @@ import {FiLink, FiShare} from 'react-icons/fi';
 
 export default function ProfilePosts() {
   const allPosts = getSortedPostsData();
-  console.log(allPosts);
   return <div className={'flex flex-col divide-y pb-8'}>
     {allPosts.map(post => (
       <div className={'bg-white'}>
@@ -26,9 +25,9 @@ export default function ProfilePosts() {
         </div>
         <div className={'mt-4 text-[14px]'}>
           <div className={'px-4 pb-4'}>
-            <div className={'font-bold'}>
+            <a href={`/blog/${post.slug}/`} className={'font-bold'}>
               {post.title}
-            </div>
+            </a>
             <div className={'text-neutral-500 line-clamp-2'}>
               {post.summary}
             </div>

@@ -1,3 +1,5 @@
+import {FiFacebook, FiGithub} from 'react-icons/fi';
+
 export const AppConfig = {
   name: "Anh Nhan Nguyen",
   username: "monokaijs", // should be GitHub username
@@ -12,5 +14,15 @@ export const AppConfig = {
   }, {
     name: "Freelance",
     price: "From $100"
-  }]
+  }],
+  socialLinks: [{
+    name: 'GitHub',
+    url: 'https://github.com/monokaijs',
+    icon: FiGithub
+  }, {
+    name: 'Facebook',
+    url: 'https://facebook.com/delimister',
+    icon: FiFacebook
+  }],
+  giscusEnabled: true,
 }

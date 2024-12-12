@@ -4,6 +4,8 @@ date: '2020-01-01'
 summary: 'A short article about how to render server-side with NextJs'
 images:
   - "https://www.camposanto.com/external/wallpapers/Launch_Yellow/FWY_2560x1600.jpg"
+  - "https://www.camposanto.com/external/wallpapers/Launch_Yellow/FWY_2560x1600.jpg"
+  - "https://www.camposanto.com/external/wallpapers/Launch_Yellow/FWY_2560x1600.jpg"
 ---
 
 Next.js has two forms of pre-rendering: **Static Generation** and **Server-side Rendering**. The difference is in **when** it generates the HTML for a page.
