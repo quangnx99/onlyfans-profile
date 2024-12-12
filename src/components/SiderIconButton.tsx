@@ -17,7 +17,7 @@ export function IconButton(props: IconButtonProps) {
     )}
     onClick={() => {
       props.onClick && props.onClick();
-      if (props.url) window.open(props.url, '_blank');
+      if (props.url) location.href = props.url;
     }}
   >
     <div className={'w-[32px]'}>
