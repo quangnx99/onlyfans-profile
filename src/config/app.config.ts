@@ -28,7 +28,7 @@ export const AppConfig = {
   expertises: [{
     name: 'Web Development',
     icon: FiCode,
-    description: 'React, Next.js, Node.js, Express, MongoDB, GraphQL, REST API, etc.'
+    description: 'React, Next.js, Node.js, Express, Nest.js, Golang, PHP, Python, SQL, MongoDB, GraphQL, REST API, C#, Rust etc.'
   }, {
     name: 'Infrastructure',
     icon: FiCloud,
