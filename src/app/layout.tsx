@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import {Geist, Geist_Mono} from 'next/font/google';
 import './globals.css';
 import {AppConfig} from '@/config/app.config';
+import {GoogleAnalytics} from '@next/third-parties/google';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,6 +32,9 @@ export default function RootLayout({
     <head>
       <meta name="viewport"
             content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,shrink-to-fit=no,viewport-fit=cover"/>
+      {AppConfig?.analytics?.gaId && (
+        <GoogleAnalytics gaId={AppConfig.analytics.gaId}/>
+      )}
     </head>
     <body
       className={`${geistSans.variable} ${geistMono.variable} antialiased`}

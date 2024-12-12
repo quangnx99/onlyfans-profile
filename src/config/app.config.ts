@@ -38,5 +38,8 @@ export const AppConfig = {
     icon: FiCpu,
     description: 'ESP32, ESP8266, Arduino, etc.'
   }],
+  analytics: {
+    gaId: 'G-NF39CSC1T1',
+  },
   giscusEnabled: true,
 }
