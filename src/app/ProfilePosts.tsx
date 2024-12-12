@@ -24,14 +24,14 @@ export default function ProfilePosts() {
           </div>
         </div>
         <div className={'mt-4 text-[14px]'}>
-          <div className={'px-4 pb-4'}>
-            <a href={`/blog/${post.slug}/`} className={'font-bold'}>
+          <a href={`/blog/${post.slug}/`} className={'block px-4 pb-4'}>
+            <div className={'font-bold'}>
               {post.title}
-            </a>
+            </div>
             <div className={'text-neutral-500 line-clamp-2'}>
               {post.summary}
             </div>
-          </div>
+          </a>
           <div className={'flex flex-row'}>
             {post.images && (
               <div>

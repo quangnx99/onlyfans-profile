@@ -49,7 +49,7 @@ export default async function PostContent({params}: PostContentProps) {
   const slug = (await params).slug;
   const post = await getPostData(slug);
   return <AppLayout>
-    <div className={'p-4 bg-white border-b'}>
+    <div className={'p-4 bg-white border-b w-full'}>
       <a href={'/'} className={'flex flex-row gap-1 items-center text-[12px] mb-4 cursor-pointer hover:text-primary'}>
         <FiArrowLeft/> Go Back
       </a>
@@ -60,7 +60,9 @@ export default async function PostContent({params}: PostContentProps) {
         {post.summary}
       </div>
     </div>
-    <PostPictures post={post}/>
+    <div className={'w-full'}>
+      <PostPictures post={post}/>
+    </div>
     <Markdown
       className={'text-[14px] bg-white p-4 my-4 border-y leading-relaxed post-content'}
       components={{
