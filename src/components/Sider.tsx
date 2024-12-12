@@ -16,10 +16,12 @@ export default function Sider() {
       <IconButton
         icon={FiHome}
         label={'Home'}
+        url={'/'}
       />
       <IconButton
         icon={FiSend}
         label={'Contact me'}
+        url={'/contact'}
       />
     </div>
     <div className={'flex flex-col gap-2'}>

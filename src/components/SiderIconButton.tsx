@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import {IconType} from 'react-icons';
 import {cn} from '@/lib/utils/cn';
 
@@ -6,6 +6,7 @@ interface IconButtonProps {
   icon: IconType;
   label: string;
   onClick?: () => void;
+  url?: string;
 }
 
 export function IconButton(props: IconButtonProps) {
@@ -14,7 +15,10 @@ export function IconButton(props: IconButtonProps) {
       'text-neutral-500 w-[40px] h-[40px] flex items-center cursor-pointer hover:text-primary hover:bg-primary/20',
       'w-full gap-4 text-[18px] font-medium'
     )}
-    onClick={props.onClick}
+    onClick={() => {
+      props.onClick && props.onClick();
+      if (props.url) window.open(props.url, '_blank');
+    }}
   >
     <div className={'w-[32px]'}>
       <props.icon className={'text-[22px] mx-auto'}/>
