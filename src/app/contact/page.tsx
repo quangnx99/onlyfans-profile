@@ -2,6 +2,7 @@ import AppLayout from '@/components/AppLayout';
 import {FiArrowLeft, FiMessageCircle} from 'react-icons/fi';
 import {AppConfig} from '@/config/app.config';
 import {Metadata} from 'next';
+import {OpenMenuButton} from '@/components/Sider';
 
 
 export const metadata: Metadata = {
@@ -17,15 +18,15 @@ export default function ContactPage() {
         className={'h-[80vh] md:h-full w-full md:w-[40%] relative'}
         style={{}}
       >
+        <div className={'absolute left-4 top-0 z-20'}>
+          <OpenMenuButton className={'text-white'}/>
+        </div>
         <div
           className={'w-full h-full absolute top-0 left-0 bg-cover bg-center grayscale z-0'}
           style={{
             backgroundImage: `url('${AppConfig.verticalAvatar}')`
           }}
         />
-        <a href={'/'} className={'flex flex-row absolute top-4 left-4 z-40 cursor-pointer items-center gap-1 text-white hover:text-primary text-[14px]'}>
-          <FiArrowLeft/> Go back
-        </a>
         <div
           className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-white/90 to-transparent h-full w-full text-black p-4 z-10">
           <div className={'absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center'}>
@@ -35,7 +36,8 @@ export default function ContactPage() {
             <div className={'text-black font-black text-4xl text-center'}>
               Can we talk about your idea?
             </div>
-            <a href={'https://t.me/delimister'} className={'bg-black text-white font-medium text-center py-4 px-8 rounded-full mt-12 text-xl transition-all cursor-pointer duration-300 hover:bg-white hover:text-black hover:shadow-lg flex flex-row gap-2 items-center'}>
+            <a href={'https://t.me/delimister'}
+               className={'bg-black text-white font-medium text-center py-4 px-8 rounded-full mt-12 text-xl transition-all cursor-pointer duration-300 hover:bg-white hover:text-black hover:shadow-lg flex flex-row gap-2 items-center'}>
               <FiMessageCircle/>
               Message Me
             </a>

@@ -4,6 +4,7 @@ import {AppConfig} from '@/config/app.config';
 import {IconButton} from '@/components/SiderIconButton';
 import {createRef, useImperativeHandle, useState} from 'react';
 import {cn} from '@/lib/utils/cn';
+import {ClassValue} from 'clsx';
 
 interface SiderRefType {
   open: Function,
@@ -11,8 +12,11 @@ interface SiderRefType {
 
 export const siderRef = createRef<SiderRefType>();
 
-export function OpenMenuButton() {
-  return <a className={'p-4 -ml-4 text-[20px] cursor-pointer md:hidden'} onClick={() => siderRef.current?.open()}>
+export function OpenMenuButton({className}: {className?: ClassValue}) {
+  return <a className={cn(
+    'p-4 -ml-4 text-[20px] cursor-pointer md:hidden',
+    className
+  )} onClick={() => siderRef.current?.open()}>
     <FiMenu/>
   </a>;
 }
@@ -25,7 +29,7 @@ export default function Sider() {
   }));
 
   return <div
-    className={'fixed left-0 top-0 bottom-0 md:relative'}
+    className={'fixed left-0 top-0 bottom-0 md:relative z-40'}
   >
     {opened && <div className={'bg-black/80 fixed left-0 right-0 top-0 bottom-0 z-10 md:hidden'} onClick={() => setOpened(false)}/>}
     <div
