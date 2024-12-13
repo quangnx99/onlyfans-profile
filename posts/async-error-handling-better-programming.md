@@ -1,7 +1,7 @@
 ---
 title: "Async Error Handling & Better Programming"
 summary: 'Với việc đang viết chủ yếu trên các stack của JavaScript, bài viết nho nhỏ này là một "nỗ lực" để chia sẻ rõ ràng hơn về cách xử lí cách lỗi cũng như bắt lỗi một cách tốt hơn trong quá trình phát triển phần mềm.'
-date: '2023-10-10'
+date: "2023-10-10"
 tags:
   - sharing
   - development
@@ -18,14 +18,16 @@ Giả sử chúng ta có một đoạn code như bên dưới:
 
 ```typescript
 function execute(args: SomeThing) {
-	return new Promise((resolve, reject) => {
-		callSomeAsyncStuffs(args).then(response => {
-			const result = doSomeOtherThing(response);
-			return result;
-		}).catch(e => {
-			reject(e);
-		})
-	})
+  return new Promise((resolve, reject) => {
+    callSomeAsyncStuffs(args)
+      .then((response) => {
+        const result = doSomeOtherThing(response);
+        return result;
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
 }
 ```
 
@@ -55,18 +57,18 @@ Hãy đọc đoạn code sau và đoán tình huống nào sẽ xảy ra:
 
 ```typescript
 async function errorFunc() {
-	// This function represent an error event that happen in async context
-	throw new Error("This stupid code does not work properly");
+  // This function represent an error event that happen in async context
+  throw new Error("This stupid code does not work properly");
 }
 
 function main() {
-	// We will use try - catch here to handle error manually.
-	try {
-		errorFunc();
-		console.log('Seems like no problem with this application.');
-	} catch (e) {
-		console.log(e);
-	}
+  // We will use try - catch here to handle error manually.
+  try {
+    errorFunc();
+    console.log("Seems like no problem with this application.");
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 main();
@@ -86,21 +88,21 @@ Vậy giải pháp ở đây là biến sync context thành async context và th
 
 ```typescript
 async function errorFunc() {
-	// This function represent an error event that happen in async context
-	throw new Error("This stupid code does not work properly");
+  // This function represent an error event that happen in async context
+  throw new Error("This stupid code does not work properly");
 }
 
 async function main() {
-	// We will use try - catch here to handle error manually.
-	try {
-		await errorFunc();
-	} catch (e) {
-		console.log(e);
-	}
+  // We will use try - catch here to handle error manually.
+  try {
+    await errorFunc();
+  } catch (e) {
+    console.log(e);
+  }
 }
 
 main().then(() => {
-		console.log('Seems like no problem with this application.');
+  console.log("Seems like no problem with this application.");
 });
 ```
 
@@ -118,40 +120,47 @@ Một lần nữa hãy ngắm lại function được đề cập ở phần tr�
 
 ```typescript
 function execute(args: SomeThing) {
-	return new Promise((resolve, reject) => {
-		callSomeAsyncStuffs(args).then(response => {
-			const result = doSomeOtherThing(response);
-			return result;
-		}).catch(e => {
-			reject(e);
-		})
-	})
+  return new Promise((resolve, reject) => {
+    callSomeAsyncStuffs(args)
+      .then((response) => {
+        const result = doSomeOtherThing(response);
+        return result;
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
 }
 ```
 
 Trước tiên, việc trả về một `new Promise` chỉ nên được thực hiện khi chúng ta hoàn toàn không thể biết được trả về của Promise ngoài cùng là khi nào. Ví dụ nhé, nếu bạn đang tạo 1 async function để thực hiện thao tác gọi tới 1 api, việc dùng `new Promise` sẽ là thừa thãi khi thực tế bạn chỉ cần trả luôn cái Promise được sinh ra từ việc gọi api là đủ rồi. Xem ví dụ như khi gọi tới 1 api bất kỳ chẳng hạn:
 
 ```typescript
-const API_ENDPOINT = 'https://api.monokaijs.com/';
+const API_ENDPOINT = "https://api.monokaijs.com/";
 // Instead of writing this code
 function badApproach() {
-	return new Promise((resolve, reject) => {
-		fetch(API_ENDPOINT, {
-			body: 'naked=true'
-		}).then(r => r.json()).then(response => {
-			const data = response.some.property.that.should.exists;
-			resolve(data);
-		}).catch(e => {
-			reject(e);
-		})
-	})
+  return new Promise((resolve, reject) => {
+    fetch(API_ENDPOINT, {
+      body: "naked=true",
+    })
+      .then((r) => r.json())
+      .then((response) => {
+        const data = response.some.property.that.should.exists;
+        resolve(data);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
 }
 // Write this
 function goodApproach() {
-	return fetch(API_ENDPOINT, {
-		body: 'naked=true'
-	}).then(r => r.json()).then(response => response.some.property.that.should.exists);
-	// no need to catch since we reject same error as throwned object
+  return fetch(API_ENDPOINT, {
+    body: "naked=true",
+  })
+    .then((r) => r.json())
+    .then((response) => response.some.property.that.should.exists);
+  // no need to catch since we reject same error as throwned object
 }
 ```
 
@@ -163,14 +172,17 @@ Phần catch, nếu xử lí gì về lỗi thì throw lại sau khi xử lí, c
 
 ```typescript
 function execute(args: SomeThing) {
-	return callSomeAsyncStuffs(args).then(response => doSomeOtherThing(response));
+  return callSomeAsyncStuffs(args).then((response) =>
+    doSomeOtherThing(response)
+  );
 }
 ```
 
 Goắt đờ phắc, one liner luôn, thậm chí nó còn có thể viết thành như dưới đây:
 
 ```typescript
-const execute = (args: SomeThing) => callSomeAsyncStuffs(args).then(r => doSomeOtherThings(r));
+const execute = (args: SomeThing) =>
+  callSomeAsyncStuffs(args).then((r) => doSomeOtherThings(r));
 ```
 
 Ah shit, đây là cách mà các lập trình viên tránh phải chai mông bằng cách viết ít lại :=)
@@ -183,24 +195,35 @@ Tới đây, chắc chắn sẽ có nhiều câu hỏi về việc tại sao ch�
 
 ```typescript
 async function checkOldGirlFriends(profileId: string) {
-	return new Promise((resolve, reject) => {
-		getProfile(profileId).then((profile: Profile) => {
-			const relationShipProfileId = profile.relationshipProfileId;
-			getRelationshipProfile(relationShipProfileId).then((relationshipProfile: RelationshipProfile) => {
-				const promises = relationshipProfile.girlfriends.filter(relationship => relationship.status === "BROKEN")
-									.map(relationship => getProfile(relationship.partnerId));
-				Promise.all(promises).then(profiles => {
-					resolve(profiles);
-				}).catch(e => {
-					reject(new ApiError('Some error occurred while loading ex profiles'));
-				});
-			}).catch(e => {
-        reject(new ApiError('User restricted their relationship info', 403));
-			});
-		}).catch((e: any) => {
-			reject(new ApiError('Failed to get profile with code ' + e.code, 501));
-		})
-	});
+  return new Promise((resolve, reject) => {
+    getProfile(profileId)
+      .then((profile: Profile) => {
+        const relationShipProfileId = profile.relationshipProfileId;
+        getRelationshipProfile(relationShipProfileId)
+          .then((relationshipProfile: RelationshipProfile) => {
+            const promises = relationshipProfile.girlfriends
+              .filter((relationship) => relationship.status === "BROKEN")
+              .map((relationship) => getProfile(relationship.partnerId));
+            Promise.all(promises)
+              .then((profiles) => {
+                resolve(profiles);
+              })
+              .catch((e) => {
+                reject(
+                  new ApiError("Some error occurred while loading ex profiles")
+                );
+              });
+          })
+          .catch((e) => {
+            reject(
+              new ApiError("User restricted their relationship info", 403)
+            );
+          });
+      })
+      .catch((e: any) => {
+        reject(new ApiError("Failed to get profile with code " + e.code, 501));
+      });
+  });
 }
 ```
 
@@ -215,8 +238,6 @@ Với những vấn đề trên, tôi cho rằng việc sử dụng Promise ở 
 ### Kết
 
 Với bài viết tương đối dài này, tôi hy vọng có thể giúp cho anh em hiểu rõ hơn một chút về việc bắt lỗi như thế nào cũng như sự khác biệt giữa các contexts trong việc xử lí lỗi, hy vọng giúp được anh em trong việc cải thiện code. Trong thời gian tới, nếu có thể góp đủ thời gian, hy vọng sẽ có thể dành thêm nhiều thì giờ để gom các bài viết nho nhỏ chia sẻ kiến thức này thành một Series nâng cấp trình độ cho các anh em đang ở level intermediate trở xuống. Nếu trong bài viết có kiến thức nào chưa được chuẩn, hy vọng anh em có thể đóng góp :D
-
-
 
 Thanks for reading. Cheers,
 
